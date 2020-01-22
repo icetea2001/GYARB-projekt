@@ -16,9 +16,16 @@ Face = RunFaceRecognition()
 
 if Face == "Rasmus":
     print("Rasmus personliga infromation")
-    theLabel = Label(MainWindow, text="Rasmus personliga infromation", fg="white")
+    theLabel = Label(MainWindow, text="Rasmus personliga infromation", fg="white", bg="black")
+    theLabel.pack()
+
+    #Lägg in din skit här Isac.
+
 else:
     print("Isac personliga infromation")
-    theLabel = Label(MainWindow, text="Isac personliga infromation")
+    theLabel = Label(MainWindow, text="Isac personliga infromation", fg="white", bg="black")
+    theLabel.pack()
+
+    #Lägg in din skit här Isac.
 
 MainWindow.mainloop()
