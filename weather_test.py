@@ -23,5 +23,14 @@ KevToCel = weather_data["main"]["temp"] -273.15
 # JSON data is difficult to visualize, so you need to pretty print
 pprint(KevToCel)
 
+icon_url = "http://openweathermap.org/img/wn/" + weather_data["weather"][0]["icon"] + "@2x.png"
+
+load = Image.open(icon_url)
+        render = ImageTk.PhotoImage(load)
+        img = Label(self, image=render)
+        img.image = render
+        img.place(x=0, y=0)
+
 pprint(weather_data["weather"])
+pprint(icon_url)
 
