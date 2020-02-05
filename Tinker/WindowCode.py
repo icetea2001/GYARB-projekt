@@ -44,35 +44,31 @@ pprint(icon_url)
 
 def RunFaceRecognition():
     return "Rasmus"
-
-Face = RunFaceRecognition()
-
-if Face == "Rasmus":
-    print("Rasmus personliga infromation")
-    theLabel = Label(MainWindow, text="", fg="white", bg="black")
-    theLabel.pack()
-
-    theLabel = Label(MainWindow, text=KevToCel, fg="white", bg="black")
-    theLabel.pack()
-
-else:
-    print("Isac personliga infromation")
-    theLabel = Label(MainWindow, text="Isac personliga infromation", fg="white", bg="black")
-    theLabel.pack()
-
     # https://samples.openweathermap.org/data/2.5/weather?id=2172797&appid=1e56ffbb3951c72be777701e5622f3a1&units=metric&lang=se
 
 
 class Window(Frame):
     def __init__(self, master=None):
-        print("DEBUG: INIT")
-
-
-
-
         Frame.__init__(self, master)
         self.master = master
         self.pack(fill=BOTH, expand=1)
+
+        print("DEBUG: INIT")
+
+        Face = RunFaceRecognition()
+
+        if Face == "Rasmus":
+            print("Rasmus personliga infromation")
+            theLabel = Label(MainWindow, text="Rasmus personliga information", fg="white", bg="black")
+            theLabel.pack()
+
+            tempLabel = Label(MainWindow, text=KevToCel, fg="white", bg="black")
+            tempLabel.place(x=110, y=90)
+
+        else:
+            print("Isac personliga information")
+            theLabel = Label(MainWindow, text="Isac personliga infromation", fg="white", bg="black")
+            theLabel.pack()
 
 
         u = urlopen(icon_url)
@@ -82,12 +78,12 @@ class Window(Frame):
         render = ImageTk.PhotoImage(load)
         img = Label(self, image=render, fg="black", bg="black")
         img.image = render
-        img.pack()
+        img.place(x=110, y=110)
 
 app = Window(MainWindow)
+app.configure(bg="black")
 width_value=MainWindow.winfo_screenwidth()
 height_value=MainWindow.winfo_screenheight()
 MainWindow.geometry("%dx%d" % (width_value, height_value))
 MainWindow.wm_attributes('-fullscreen', 'true')
-MainWindow.configure(background="black")
-MainWindow.mainloop()
+app.mainloop()
