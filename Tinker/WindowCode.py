@@ -97,8 +97,6 @@ class Window(Frame):
             theLabel.pack()
             theLabel.place(x=620, y=180)
 
-            tempLabel = Label(MainWindow, text=(str(KevToCel) + " °C"), fg="white", bg="black")
-            tempLabel.place(x=110, y=90)
             theLabel2 = Label(MainWindow, text="Trångets södra väg 6", fg="white", bg="black", font=("Helvetica", 16))
             theLabel2.pack()
             theLabel2.place(x=667, y=210)
@@ -107,8 +105,9 @@ class Window(Frame):
             theLabel3.pack()
             theLabel3.place(x=730, y=240)
 
-            tempLabel = Label(MainWindow, text=KevToCel, fg="white", bg="black", font=("Helvetica", 16))
-            tempLabel.place(x=100, y=90)
+            tempLabel = Label(MainWindow, text=(str(KevToCel) + " °C"), fg="white", bg="black", font=("Helvetica", 16))
+            tempLabel.place(x=175, y=90)
+
 
         else:
             print("Isac personliga information")
