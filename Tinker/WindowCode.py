@@ -1,3 +1,4 @@
+import math
 from tkinter import *
 import requests
 from pprint import pprint
@@ -62,7 +63,8 @@ Final_url = base_url + "appid=" + API_key + "&id=" + city_id
 # this variable contain the JSON data which the API returns
 weather_data = requests.get(Final_url).json()
 
-KevToCel = weather_data["main"]["temp"] -273.15
+KevToCel = round(weather_data["main"]["temp"] - 273.15)
+
 
 # JSON data is difficult to visualize, so you need to pretty print
 pprint(KevToCel)
@@ -94,14 +96,13 @@ class Window(Frame):
             theLabel = Label(MainWindow, text="Rasmus personliga information", fg="white", bg="black")
             theLabel.pack()
 
-            tempLabel = Label(MainWindow, text=KevToCel, fg="white", bg="black")
+            tempLabel = Label(MainWindow, text=(str(KevToCel) + " °C"), fg="white", bg="black")
             tempLabel.place(x=110, y=90)
 
         else:
             print("Isac personliga information")
             theLabel = Label(MainWindow, text="Isac personliga infromation", fg="white", bg="black")
             theLabel.pack()
-
 
         u = urlopen(icon_url)
         raw_data = u.read()
