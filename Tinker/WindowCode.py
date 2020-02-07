@@ -91,11 +91,20 @@ class Window(Frame):
 
         if Face == "Rasmus":
             print("Rasmus personliga infromation")
-            theLabel = Label(MainWindow, text="Rasmus personliga information", fg="white", bg="black")
+            theLabel = Label(MainWindow, text="Rasmus personliga information", fg="white", bg="black", font=("Helvetica", 16))
             theLabel.pack()
+            theLabel.place(x=620, y=180)
 
-            tempLabel = Label(MainWindow, text=KevToCel, fg="white", bg="black")
-            tempLabel.place(x=110, y=90)
+            theLabel2 = Label(MainWindow, text="Trångets södra väg 6", fg="white", bg="black", font=("Helvetica", 16))
+            theLabel2.pack()
+            theLabel2.place(x=667, y=210)
+
+            theLabel3 = Label(MainWindow, text="423 42", fg="white", bg="black", font=("Helvetica", 16))
+            theLabel3.pack()
+            theLabel3.place(x=730, y=240)
+
+            tempLabel = Label(MainWindow, text=KevToCel, fg="white", bg="black", font=("Helvetica", 16))
+            tempLabel.place(x=100, y=90)
 
         else:
             print("Isac personliga information")
@@ -110,7 +119,7 @@ class Window(Frame):
         render = ImageTk.PhotoImage(load)
         img = Label(self, image=render, fg="black", bg="black")
         img.image = render
-        img.place(x=110, y=110)
+        img.place(x=145, y=110)
 
 app = Window(MainWindow)
 app.configure(bg="black")
