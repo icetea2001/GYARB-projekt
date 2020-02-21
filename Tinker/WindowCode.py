@@ -7,6 +7,7 @@ from urllib.request import urlopen
 import base64
 import io
 
+import datetime
 
 import requests
 import base64
@@ -122,6 +123,22 @@ class Window(Frame):
         img = Label(self, image=render, fg="black", bg="black")
         img.image = render
         img.place(x=145, y=110)
+
+        self.clock_label = Label(self, text="", fg="white", bg="black", font=("Arial", 34))
+        self.clock_label.pack()
+
+        self.update_clock()
+
+        self.clock_label.place(x=550, y=650)
+
+
+    def update_clock(self):
+        current_date_time = datetime.datetime.now()
+        new_text = current_date_time.strftime("%H:%M:%S")
+        self.clock_label.configure(text=new_text)
+        self.after(1000, self.update_clock)
+
+
 
 app = Window(MainWindow)
 app.configure(bg="black")
