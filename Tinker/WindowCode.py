@@ -12,6 +12,14 @@ import datetime
 import requests
 import base64
 
+import BussInfo
+
+date = datetime.datetime.now()
+
+buss_info = BussInfo.BussInfo('ph7QCU5JM95Kh8IcP81Sk6Y4Smsa', '3eU64rOqVMzKPasOzh_c9pTvV18a')
+buss_info.create_access_token()
+
+
 MainWindow = Tk()
 Face = ""
 
@@ -22,28 +30,11 @@ def key(event):
 width_value=MainWindow.winfo_screenwidth()
 height_value=MainWindow.winfo_screenheight()
 MainWindow.geometry("%dx%d" % (width_value, height_value))
-MainWindow.wm_attributes('-fullscreen', 'true')
+# MainWindow.wm_attributes('-fullscreen', 'true')
 MainWindow.configure(background="black")
 MainWindow.bind("<Key>", key)
 
-def encode_str(data_str):
-    data = base64.b64encode(data_str.encode("utf-8"))
-    return str(data, "utf-8")
 
-def get_access_token(secret, key):
-    return encode_str(str(key) + ":" + str(secret))
-
-
-api_key = "ph7QCU5JM95Kh8IcP81Sk6Y4Smsa"
-api_secret = "3eU64rOqVMzKPasOzh_c9pTvV18a"
-api_token = 'your_api_token'
-api_url_base = 'https://api.vasttrafik.se/token'
-headers = {'Content-Type': 'application/x-www-form-urlencoded',
-           'Authorization': 'Basic {0}'.format(get_access_token(api_secret, api_key))}
-
-params = {"grant_type": "client_credentials", "scope": "nextbus"}
-
-print(requests.get(api_url_base, params))
 
 #https://samples.openweathermap.org/data/2.5/weather?id=2172797&appid=1e56ffbb3951c72be777701e5622f3a1&units=metric&lang=se
 
@@ -107,7 +98,7 @@ class Window(Frame):
             theLabel3.place(x=730, y=240)
 
             tempLabel = Label(MainWindow, text=(str(KevToCel) + " °C"), fg="white", bg="black", font=("Helvetica", 16))
-            tempLabel.place(x=175, y=90)
+            tempLabel.place(x=1105, y=90)
 
 
         else:
@@ -122,10 +113,25 @@ class Window(Frame):
         render = ImageTk.PhotoImage(load)
         img = Label(self, image=render, fg="black", bg="black")
         img.image = render
-        img.place(x=145, y=110)
+        img.place(x=1075, y=110)
 
         self.clock_label = Label(self, text="", fg="white", bg="black", font=("Arial", 34))
         self.clock_label.pack()
+
+        self.buss_labels = []
+
+        busses = buss_info.get_buss_info(datetime.datetime.now())
+        y = 0
+        for buss in busses:
+            text = buss.line + " " + buss.name + " - " + buss.time + " - " + buss.track
+
+            label = Label(self, text=text, fg="white", bg=buss.fg_color)
+            label.pack()
+            label.place(x=50, y = y)
+
+            y += 30
+            self.buss_labels.append(label)
+
 
         self.update_clock()
 
