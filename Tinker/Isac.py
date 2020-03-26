@@ -7,7 +7,6 @@ class Isac:
         self.items = []
 
     def get_data(self):
-        print("Isac personliga information")
         theLabel = Label(self.MainWindow, text="Isac personliga infromation", fg="white", bg="black")
         theLabel.pack()
         self.items.append(theLabel)
