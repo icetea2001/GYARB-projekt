@@ -160,7 +160,11 @@ class Window(Frame):
             self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
             self.canvas.create_image(0,0,image=self.photo, anchor=NW)
 
+
         self.master.after(self.delay, self.update)
+
+    def update_name(self, name):
+        Face = name
 
 
 
