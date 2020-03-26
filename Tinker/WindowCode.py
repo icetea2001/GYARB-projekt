@@ -16,6 +16,12 @@ import base64
 import BussInfo
 
 from FaceReconitionCode import FaceReconition
+import current
+
+from Rasmus import Rasmus
+from Isac import Isac
+
+lastFace = "Unknown"
 
 date = datetime.datetime.now()
 
@@ -23,7 +29,6 @@ buss_info = BussInfo.BussInfo('ph7QCU5JM95Kh8IcP81Sk6Y4Smsa', '3eU64rOqVMzKPasOz
 buss_info.create_access_token()
 
 MainWindow = Tk()
-Face = ""
 
 def key(event):
     if event.char == '\r':
@@ -69,6 +74,9 @@ pprint(weather_data["weather"])
 pprint(icon_url)
 
 
+#Initiera Rasmus och Isac klassen
+rasmus_data = Rasmus(MainWindow, [KevToCel])
+isac_data = Isac(MainWindow)
 
 def RunFaceRecognition():
     return "Rasmus"
@@ -85,35 +93,9 @@ class Window(Frame):
         self.canvas = Canvas(MainWindow, width=self.vid.width, height=self.vid.height)
         self.canvas.pack()
 
+        #Hur ofta kameran ska uppdatera, startar också update metoden som senare kommer köras av sig själv
         self.delay = 15
         self.update()
-
-        print("DEBUG: INIT")
-
-        Face = RunFaceRecognition()
-
-        if Face == "Rasmus":
-            print("Rasmus personliga infromation")
-            theLabel = Label(MainWindow, text="Rasmus personliga information", fg="white", bg="black", font=("Helvetica", 16))
-            theLabel.pack()
-            theLabel.place(x=620, y=180)
-
-            theLabel2 = Label(MainWindow, text="Trångets södra väg 6", fg="white", bg="black", font=("Helvetica", 16))
-            theLabel2.pack()
-            theLabel2.place(x=667, y=210)
-
-            theLabel3 = Label(MainWindow, text="423 42", fg="white", bg="black", font=("Helvetica", 16))
-            theLabel3.pack()
-            theLabel3.place(x=730, y=240)
-
-            tempLabel = Label(MainWindow, text=(str(KevToCel) + " °C"), fg="white", bg="black", font=("Helvetica", 16))
-            tempLabel.place(x=1105, y=90)
-
-
-        else:
-            print("Isac personliga information")
-            theLabel = Label(MainWindow, text="Isac personliga infromation", fg="white", bg="black")
-            theLabel.pack()
 
         u = urlopen(icon_url)
         raw_data = u.read()
@@ -153,18 +135,34 @@ class Window(Frame):
         self.clock_label.configure(text=new_text)
         self.after(1000, self.update_clock)
 
+    # Uppdatera kameran
     def update(self):
+        global lastFace
         ret, frame = self.vid.get_frame()
 
         if ret:
             self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
             self.canvas.create_image(0,0,image=self.photo, anchor=NW)
 
+            #uppdaterar data ifall ansiktet har ändrats
+            if lastFace != current.name:
+                self.update_data()
+                lastFace = current.name
 
+        #Kör update metoden igen
         self.master.after(self.delay, self.update)
 
-    def update_name(self, name):
-        Face = name
+    #Uppdatera datan
+    def update_data(self):
+        if current.name == "Rasmus":
+            #Förstör isacs data och skapa rasmus
+            isac_data.destroy_data()
+            rasmus_data.get_data()
+        elif current.name == "Isac":
+            #Förstör rasmus data och skapa isacs
+            rasmus_data.destroy_data()
+            isac_data.get_data()
+
 
 
 
